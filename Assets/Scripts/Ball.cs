@@ -6,12 +6,14 @@ public class Ball : MonoBehaviour {
 
 	enum BallStates { Idle,Launched}
 
-	public Paddle m_Paddle;
+	private Paddle m_Paddle;
 	private BallStates m_BallState = BallStates.Idle;
 	Vector3 paddleToBallVector;
 	// Use this for initialization
 	void Start () {
-        paddleToBallVector = this.transform.position - m_Paddle.transform.position;
+		m_Paddle = GameObject.FindObjectOfType<Paddle>();
+
+		paddleToBallVector = this.transform.position - m_Paddle.transform.position;
 	}
 
 	// Update is called once per frame
