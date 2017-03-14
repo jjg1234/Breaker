@@ -17,12 +17,21 @@ public class LevelManager : MonoBehaviour {
 
 	public void LoadNextLevel()
 	{
-
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1, LoadSceneMode.Single);
 	}
 
 	public void QuitGame()
 	{
 		Application.Quit();
+	}
+
+	public void BrickDestroyed()
+	{
+		if (Brick.s_BreakableBrickCount == 0)
+		{
+			LevelManager mylvlmanager = GameObject.FindObjectOfType<LevelManager>();
+			mylvlmanager.LoadNextLevel();
+		}
 	}
 
 }

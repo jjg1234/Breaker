@@ -15,9 +15,10 @@ public class Paddle : MonoBehaviour {
 		float max = 15.5f;
 
 		float MousePosition = Input.mousePosition.x / Screen.width * 16;
-
-		//Debug.Log(MousePosition);
 		this.transform.position = new Vector3(Mathf.Clamp(MousePosition,min,max), 0.5f, 0.0f);
+
+
+			
 
 	}
 }
