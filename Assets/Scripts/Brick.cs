@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
+
 	private int m_TimesHits;
 	public Sprite[] m_HitSprites;
 	public static int s_BreakableBrickCount = 0;

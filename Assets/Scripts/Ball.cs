@@ -16,6 +16,15 @@ public class Ball : MonoBehaviour {
 		paddleToBallVector = this.transform.position - m_Paddle.transform.position;
 	}
 
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (m_BallState == BallStates.Launched)
+		{
+			this.GetComponent<AudioSource>().Play();
+		}
+		
+	}
+
 	// Update is called once per frame
 	void Update () {
 
