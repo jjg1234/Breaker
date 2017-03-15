@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
-
+	public AudioClip m_CrackSound;
 	private int m_TimesHits;
 	public Sprite[] m_HitSprites;
 	public static int s_BreakableBrickCount = 0;
 	private bool m_IsBreakable;
+	public GameObject m_Smoke;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -19,7 +21,6 @@ public class Brick : MonoBehaviour
 		{
 			s_BreakableBrickCount++;
 		}
-
 	}
 
 	// Update is called once per frame
@@ -43,12 +44,18 @@ public class Brick : MonoBehaviour
 
 			if (m_TimesHits >= m_MaxHits)
 			{
+				GameObject localSmoke = Instantiate(m_Smoke, gameObject.transform.position,Quaternion.identity);
+				//m_Smoke.transform.position = this.transform.position;
+				localSmoke.GetComponent<ParticleSystem>().startColor =  this.GetComponent<SpriteRenderer>().color;
+				localSmoke.GetComponent<ParticleSystem>().Play();
 				Destroy(gameObject);
 				s_BreakableBrickCount--;
 				GameObject.FindObjectOfType<LevelManager>().BrickDestroyed();
 			}
 			else
 			{
+				AudioSource.PlayClipAtPoint(m_CrackSound,this.transform.position);
+
 				if (m_HitSprites.Length >= m_TimesHits)
 				{
 					if (m_HitSprites[m_TimesHits - 1] != null)

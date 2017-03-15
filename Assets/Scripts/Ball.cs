@@ -18,9 +18,18 @@ public class Ball : MonoBehaviour {
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
+		Vector2 tweak = new Vector2(Random.Range(0f,0.2f), Random.Range(0f, 0.2f));
+
+		Rigidbody2D myRigidBody = this.GetComponent<Rigidbody2D>();
+		myRigidBody.velocity += tweak;
+
 		if (m_BallState == BallStates.Launched)
 		{
-			this.GetComponent<AudioSource>().Play();
+			if (collision.gameObject.tag != "Breakable")
+			{
+				this.GetComponent<AudioSource>().Play();
+			}
+			
 		}
 		
 	}
