@@ -11,6 +11,7 @@ public class Brick : MonoBehaviour
 	public static int s_BreakableBrickCount = 0;
 	private bool m_IsBreakable;
 	public GameObject m_Smoke;
+	private static int m_NumberOfBricksStart;
 
 	// Use this for initialization
 	void Start()
@@ -21,6 +22,7 @@ public class Brick : MonoBehaviour
 		{
 			s_BreakableBrickCount++;
 		}
+		m_NumberOfBricksStart = s_BreakableBrickCount;
 	}
 
 	// Update is called once per frame
@@ -41,20 +43,29 @@ public class Brick : MonoBehaviour
 			m_TimesHits++;
 
 			int m_MaxHits = m_HitSprites.Length + 1;
-
+			AudioSource.PlayClipAtPoint(m_CrackSound, this.transform.position);
 			if (m_TimesHits >= m_MaxHits)
 			{
 				GameObject localSmoke = Instantiate(m_Smoke, gameObject.transform.position,Quaternion.identity);
-				//m_Smoke.transform.position = this.transform.position;
+				
 				localSmoke.GetComponent<ParticleSystem>().startColor =  this.GetComponent<SpriteRenderer>().color;
 				localSmoke.GetComponent<ParticleSystem>().Play();
-				Destroy(gameObject);
 				s_BreakableBrickCount--;
+				Debug.Log("s_BreakableBrickCount = " + s_BreakableBrickCount);
+
+				if ((float)s_BreakableBrickCount / (float)m_NumberOfBricksStart != 0)
+				{
+					float tmpBrickRatioLeft = (float)((float)s_BreakableBrickCount / (float)m_NumberOfBricksStart);
+					Paddle.ChangeColorState(tmpBrickRatioLeft);
+				}
+				
+
+				Destroy(gameObject);
 				GameObject.FindObjectOfType<LevelManager>().BrickDestroyed();
 			}
 			else
 			{
-				AudioSource.PlayClipAtPoint(m_CrackSound,this.transform.position);
+				
 
 				if (m_HitSprites.Length >= m_TimesHits)
 				{

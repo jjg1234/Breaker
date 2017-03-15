@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class Paddle : MonoBehaviour {
 	public bool m_Autoplay;
 	// Use this for initialization
 	void Start () {
-
+		ChangeColorState(1.0f);
 	}
 	
 	// Update is called once per frame
@@ -24,9 +25,16 @@ public class Paddle : MonoBehaviour {
 		{
 			MoveWithBall(min, max);
 		}
-
-
 	}
+
+	public static void ChangeColorState(float _state)
+	{
+
+		Color Gradiant = new Color( (Color.red * _state).r, (Color.green * (1-_state)).g , 0);
+		GameObject.FindObjectOfType<Paddle>().GetComponent<SpriteRenderer>().color = Gradiant;
+		
+	}
+
 
 	private void MoveWithMouse(float min, float max)
 	{

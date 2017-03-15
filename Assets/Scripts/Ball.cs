@@ -9,11 +9,13 @@ public class Ball : MonoBehaviour {
 	private Paddle m_Paddle;
 	private BallStates m_BallState = BallStates.Idle;
 	Vector3 paddleToBallVector;
+	
 	// Use this for initialization
 	void Start () {
 		m_Paddle = GameObject.FindObjectOfType<Paddle>();
 
 		paddleToBallVector = this.transform.position - m_Paddle.transform.position;
+		
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
